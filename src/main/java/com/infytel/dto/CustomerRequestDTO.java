@@ -1,5 +1,6 @@
 package com.infytel.dto;
 
+import com.infytel.entity.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,16 +10,24 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-@RequiredArgsConstructor
 @NoArgsConstructor
 public class CustomerRequestDTO {
-    long phoneNo;
-    String name;
-    String email;
-    int age;
-    char gender;
-    List<FriendFamilyDTO> friendAndFamily;
-    String password;
-    String address;
-    PlanRequestDTO currentPlan;
+    private Long phoneNumber;
+    private String name;
+    private Integer age;
+    private Character gender;
+    private String address;
+    private Integer planId;
+
+    public static Customer prepareCustomerEntity(CustomerRequestDTO customerRequestDTO)
+    {
+        Customer customerEntity = new Customer();
+        customerEntity.setPhoneNumber(customerRequestDTO.getPhoneNumber());
+        customerEntity.setName(customerRequestDTO.getName());
+        customerEntity.setGender(customerRequestDTO.getGender());
+        customerEntity.setAge(customerRequestDTO.getAge());
+        customerEntity.setAddress(customerRequestDTO.getAddress());
+        customerEntity.setPlanId(customerRequestDTO.getPlanId());
+        return customerEntity;
+    }
 }
