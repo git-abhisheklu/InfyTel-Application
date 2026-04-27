@@ -1,27 +1,32 @@
 package com.infytel.service;
 
+import com.infytel.dao.CustomerDAO;
+import com.infytel.dao.CustomerDAOImpl;
 import com.infytel.dto.CustomerRequestDTO;
 import com.infytel.dto.CustomerResponseDTO;
 import com.infytel.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private CustomerDAOImpl customerDAO;
 
     @Override
-    public String createCustomer(CustomerRequestDTO customerRequestDTO) {
-        return "";
+    public void createCustomer(CustomerRequestDTO customerRequestDTO) {
+        customerDAO.insert(CustomerRequestDTO.prepareCustomerEntity(customerRequestDTO));
     }
 
     @Override
     public CustomerResponseDTO getCustomer(Long id) {
         return null;
+    }
+
+    @Override
+    public int remove(Long phoneNo) {
+        return customerDAO.remove(phoneNo);
     }
 
 //    // calls repository layer method to create customer

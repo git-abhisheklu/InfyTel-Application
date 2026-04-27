@@ -12,32 +12,32 @@ import java.util.List;
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
-
     @Autowired
     CustomerServiceImpl customerServiceImpl;
 
     @PostMapping(consumes="application/json")
     public ResponseEntity<String> createCustomer(@RequestBody CustomerRequestDTO customerRequestDTO)
     {
-        String response = customerServiceImpl.createCustomer(customerRequestDTO);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        customerServiceImpl.createCustomer(customerRequestDTO);
+        return new ResponseEntity<>("Please check console...", HttpStatus.OK);
     }
 
-    @GetMapping(produces="application/json")
-    public  List<CustomerRequestDTO> fetchCustomer()
-    {
-        return customerServiceImpl.fetchCustomer();
-    }
+//    @GetMapping(produces="application/json")
+//    public  List<CustomerRequestDTO> fetchCustomer()
+//    {
+//        return customerServiceImpl.fetchCustomer();
+//    }
 
-    @PutMapping
-    public String updateCustomer()
-    {
-        return "customer details updated successfully";
-    }
+//    @PutMapping
+//    public String updateCustomer()
+//    {
+//        return "customer details updated successfully";
+//    }
 
     @DeleteMapping
-    public String deleteCustomer()
+    public String deleteCustomer(Long phoneNumber)
     {
-        return "customer details deleted successfully";
+        int remove = customerServiceImpl.remove(phoneNumber);
+        return "Customer has been removed: " + remove;
     }
 }
