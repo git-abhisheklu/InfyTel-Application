@@ -92,11 +92,11 @@ public class Customer {
     public static CustomerResponseDTO prepareDTO(Customer customer) {
         CustomerResponseDTO customerResponseDTO = new CustomerResponseDTO();
         customerResponseDTO.setPhoneNumber(customer.getPhoneNumber());
-        customerResponseDTO.setAddress(customer.getAddress());
         customerResponseDTO.setAge(customer.getAge());
         customerResponseDTO.setName(customer.getName());
         customerResponseDTO.setGender(customer.getGender());
         customerResponseDTO.setPlanId(customer.getPlanId());
+        customerResponseDTO.setAddress(customer.getAddress());
         return customerResponseDTO;
     }
 }

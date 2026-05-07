@@ -11,5 +11,5 @@ public interface CustomerDAO {
 
     public List<Customer> getAll();
 
-    public int update(Long phoneNo, String address);
+    public int update(Long phoneNo, String address, String name);
 }

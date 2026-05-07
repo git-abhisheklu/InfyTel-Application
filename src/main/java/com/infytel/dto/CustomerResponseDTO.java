@@ -16,6 +16,6 @@ public class CustomerResponseDTO {
     private String name;
     private Integer age;
     private Character gender;
-    private String address;
     private Integer planId;
+    private String address;
 }

@@ -8,8 +8,10 @@ import jakarta.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Objects;
 
 @Repository("customerRepository")
 public class CustomerDAOImpl implements CustomerDAO {
@@ -55,18 +57,32 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public int update(Long phoneNo, String address) {
+    public int update(Long phoneNo, String address, String name) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-        Customer customer = entityManager.find(Customer.class, phoneNo);
-        if(customer!=null){
-            customer.setAddress(address);
-            entityManager.persist(customer);
-            entityManager.getTransaction().commit();
-            return 1;
-        }else{
-            return 0;
-        }
+        int returnValue = 0;
+        try {
+            if (StringUtils.hasText(address) || StringUtils.hasText(name)) {
 
+                Customer customer = entityManager.find(Customer.class, phoneNo);
+                if (Objects.isNull(customer)) {
+                    return 0;
+                }
+                if (StringUtils.hasText(address)) {
+                    customer.setAddress(address);
+                }
+                if (StringUtils.hasText(name)) {
+                    customer.setName(name);
+                }
+                entityManager.getTransaction().begin();
+                entityManager.merge(customer);
+                entityManager.getTransaction().commit();
+                returnValue = 1;
+            } else {
+                returnValue = 2;
+            }
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+        }
+        return returnValue;
     }
 }

@@ -1,6 +1,7 @@
 package com.infytel.controller;
 
 import com.infytel.dto.CustomerDTO;
+import com.infytel.dto.CustomerResponseDTO;
 import com.infytel.dto.UpdateCustomerDTO;
 import com.infytel.service.CustomerServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class CustomerController {
     }
 
     @GetMapping(produces = "application/json")
-    public List<CustomerDTO> fetchCustomers() {
+    public List<CustomerResponseDTO> fetchCustomers() {
         return customerServiceImpl.getAll();
     }
 
