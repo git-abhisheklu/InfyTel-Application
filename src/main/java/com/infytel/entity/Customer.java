@@ -17,7 +17,9 @@ public class Customer {
     @Column(name = "plan_id")
     private Integer planId;
 
-    public Customer(){}
+    public Customer() {
+    }
+
     public Customer(Long phoneNumber, String name, Integer age, Character gender, String address, Integer planId) {
         this.phoneNumber = phoneNumber;
         this.name = name;
@@ -86,7 +88,8 @@ public class Customer {
                 ", planId=" + planId +
                 '}';
     }
-    public static CustomerResponseDTO prepareDTO(Customer customer){
+
+    public static CustomerResponseDTO prepareDTO(Customer customer) {
         CustomerResponseDTO customerResponseDTO = new CustomerResponseDTO();
         customerResponseDTO.setPhoneNumber(customer.getPhoneNumber());
         customerResponseDTO.setAddress(customer.getAddress());

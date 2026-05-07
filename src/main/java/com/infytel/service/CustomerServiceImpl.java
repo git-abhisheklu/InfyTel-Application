@@ -5,10 +5,8 @@ import com.infytel.dto.CustomerDTO;
 import com.infytel.dto.UpdateCustomerDTO;
 import com.infytel.entity.Customer;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,10 +37,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public String updateByPhoneNo(Long phoneNo, UpdateCustomerDTO updateCustomerDTO) {
-        int result = customerDAO.update(phoneNo,updateCustomerDTO.getAddress());
-        if (result==1){
+        int result = customerDAO.update(phoneNo, updateCustomerDTO.getAddress());
+        if (result == 1) {
             return "Customer has been updated successfully.";
-        }else{
+        } else {
             return "No customer found with the given phone number.";
         }
     }
