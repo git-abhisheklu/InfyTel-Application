@@ -1,9 +1,6 @@
 package com.infytel.repository;
 
-import org.springframework.stereotype.Repository;
-
-@Repository
-public interface CustomerRepository{
+public interface CustomerRepository {
 //    List<CustomerRequestDTO> customers = null;
 //    // Populating CustomerDTO - hard-coded
 //    @PostConstruct

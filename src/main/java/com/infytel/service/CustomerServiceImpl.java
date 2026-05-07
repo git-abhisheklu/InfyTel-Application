@@ -1,26 +1,28 @@
 package com.infytel.service;
 
 import com.infytel.dao.CustomerDAO;
-import com.infytel.dao.CustomerDAOImpl;
-import com.infytel.dto.CustomerRequestDTO;
-import com.infytel.dto.CustomerResponseDTO;
-import com.infytel.repository.CustomerRepository;
+import com.infytel.dto.CustomerDTO;
+import com.infytel.dto.UpdateCustomerDTO;
+import com.infytel.entity.Customer;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class CustomerServiceImpl implements CustomerService {
+import java.util.ArrayList;
+import java.util.List;
 
-    @Autowired
-    private CustomerDAOImpl customerDAO;
+@Service
+@RequiredArgsConstructor
+public class CustomerServiceImpl implements CustomerService {
+    private final CustomerDAO customerDAO;
 
     @Override
-    public void createCustomer(CustomerRequestDTO customerRequestDTO) {
-        customerDAO.insert(CustomerRequestDTO.prepareCustomerEntity(customerRequestDTO));
+    public void create(CustomerDTO customerDTO) {
+        customerDAO.insert(CustomerDTO.prepareCustomerEntity(customerDTO));
     }
 
     @Override
-    public CustomerResponseDTO getCustomer(Long id) {
+    public CustomerDTO getByPhoneNo(Long phoneNo) {
         return null;
     }
 
@@ -29,20 +31,19 @@ public class CustomerServiceImpl implements CustomerService {
         return customerDAO.remove(phoneNo);
     }
 
-//    // calls repository layer method to create customer
-//    public String createCustomer(CustomerRequestDTO customerRequestDTO) {
-//        return customerRepository.createCustomer(customerRequestDTO);
-//    }
-//    // calls repository layer method to fetch customers
-//    public List<CustomerRequestDTO> fetchCustomer() {
-//        return customerRepository.fetchCustomer();
-//    }
-//    // calls repository layer method to delete customer
-//    public String deleteCustomer(long phoneNumber) {
-//        return customerRepository.deleteCustomer(phoneNumber);
-//    }
-//    // calls repository layer method to update customer
-//    public String updateCustomer(long phoneNumber, CustomerRequestDTO customerRequestDTO) {
-//        return customerRepository.updateCustomer(phoneNumber, customerRequestDTO);
-//    }
+    @Override
+    public List<CustomerDTO> getAll() {
+        List<Customer> customerList = customerDAO.getAll();
+        return List.of();
+    }
+
+    @Override
+    public String updateByPhoneNo(Long phoneNo, UpdateCustomerDTO updateCustomerDTO) {
+        int result = customerDAO.update(phoneNo,updateCustomerDTO.getAddress());
+        if (result==1){
+            return "Customer has been updated successfully.";
+        }else{
+            return "No customer found with the given phone number.";
+        }
+    }
 }

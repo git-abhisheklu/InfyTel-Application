@@ -1,8 +1,11 @@
 package com.infytel.controller;
 
-import com.infytel.dto.CustomerRequestDTO;
+import com.infytel.dto.CustomerDTO;
+import com.infytel.dto.UpdateCustomerDTO;
 import com.infytel.service.CustomerServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,32 +14,34 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/customers")
+@RequiredArgsConstructor
 public class CustomerController {
-    @Autowired
-    CustomerServiceImpl customerServiceImpl;
 
-    @PostMapping(consumes="application/json")
-    public ResponseEntity<String> createCustomer(@RequestBody CustomerRequestDTO customerRequestDTO)
-    {
-        customerServiceImpl.createCustomer(customerRequestDTO);
-        return new ResponseEntity<>("Please check console...", HttpStatus.OK);
+    private static Logger logger = LoggerFactory.getLogger(CustomerController.class);
+    private final CustomerServiceImpl customerServiceImpl;
+
+    @PostMapping(consumes = "application/json")
+    public ResponseEntity<String> createCustomer(@RequestBody CustomerDTO customerDTO) {
+        try {
+            customerServiceImpl.create(customerDTO);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Record has been added successfully...", HttpStatus.OK);
     }
 
-//    @GetMapping(produces="application/json")
-//    public  List<CustomerRequestDTO> fetchCustomer()
-//    {
-//        return customerServiceImpl.fetchCustomer();
-//    }
+    @GetMapping(produces = "application/json")
+    public List<CustomerDTO> fetchCustomers() {
+        return customerServiceImpl.getAll();
+    }
 
-//    @PutMapping
-//    public String updateCustomer()
-//    {
-//        return "customer details updated successfully";
-//    }
+    @PatchMapping(value = "/{phoneNumber}")
+    public String updateCustomer(@PathVariable Long phoneNumber, @RequestBody UpdateCustomerDTO updateCustomerDTO) {
+        return customerServiceImpl.updateByPhoneNo(phoneNumber, updateCustomerDTO);
+    }
 
-    @DeleteMapping
-    public String deleteCustomer(Long phoneNumber)
-    {
+    @DeleteMapping("/{phoneNumber}")
+    public String deleteCustomer(@PathVariable Long phoneNumber) {
         int remove = customerServiceImpl.remove(phoneNumber);
         return "Customer has been removed: " + remove;
     }

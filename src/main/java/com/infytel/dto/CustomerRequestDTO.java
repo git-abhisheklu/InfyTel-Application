@@ -21,13 +21,13 @@ public class CustomerRequestDTO {
 
     public static Customer prepareCustomerEntity(CustomerRequestDTO customerRequestDTO)
     {
-        Customer customerEntity = new Customer();
-        customerEntity.setPhoneNumber(customerRequestDTO.getPhoneNumber());
-        customerEntity.setName(customerRequestDTO.getName());
-        customerEntity.setGender(customerRequestDTO.getGender());
-        customerEntity.setAge(customerRequestDTO.getAge());
-        customerEntity.setAddress(customerRequestDTO.getAddress());
-        customerEntity.setPlanId(customerRequestDTO.getPlanId());
-        return customerEntity;
+        Customer customer = new Customer();
+        customer.setAge(customerRequestDTO.getAge());
+        customer.setName(customerRequestDTO.getName());
+        customer.setAddress(customerRequestDTO.getAddress());
+        customer.setPlanId(customerRequestDTO.getPlanId());
+        customer.setPhoneNumber(customerRequestDTO.getPhoneNumber());
+        customer.setGender(customerRequestDTO.getGender());
+        return customer;
     }
 }
