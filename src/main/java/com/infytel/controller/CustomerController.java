@@ -44,6 +44,6 @@ public class CustomerController {
     @DeleteMapping("/{phoneNumber}")
     public String deleteCustomer(@PathVariable Long phoneNumber) {
         int remove = customerServiceImpl.remove(phoneNumber);
-        return "Customer has been removed: " + remove;
+        return "Customer has been removed: " + phoneNumber;
     }
 }
